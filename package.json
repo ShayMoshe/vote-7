@@ -1,0 +1,28 @@
+{
+  "name": "vote-7",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "classnames": "^2.2.5",
+    "material-ui": "^0.17.4",
+    "meteor-node-stubs": "~0.2.4",
+    "react": "^15.5.4",
+    "react-addons-pure-render-mixin": "^15.5.2",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.0.0-beta.8",
+    "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1"
+  },
+  "babel": {
+    "plugins": [
+      "transform-class-properties"
+    ]
+  }
+}
