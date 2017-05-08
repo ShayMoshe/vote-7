@@ -25,10 +25,9 @@ export default class DrawerSimpleExample extends React.Component {
                 />
                 <Drawer open={this.state.open}
                     containerStyle={{ 'top': '65px' }}>
-                    <MenuItem><Link to={'/1'}>Menu Item 1</Link></MenuItem>
-                    <MenuItem><Link to={'/2'}>Menu Item 2</Link></MenuItem>
-                    <MenuItem><Link to={'/Admin'}>Admin</Link></MenuItem>
-
+                    <Link style={{ textDecoration: 'none' }} to={'/'} onClick={this.handleToggle}><MenuItem>Home</MenuItem></Link>                    
+                    <Link style={{ textDecoration: 'none' }} to={'/Admin'} onClick={this.handleToggle}><MenuItem>Admin</MenuItem></Link>
+                    <Link style={{ textDecoration: 'none' }} to={'/About'} onClick={this.handleToggle}><MenuItem>About</MenuItem></Link>
                 </Drawer>
             </div>
         );

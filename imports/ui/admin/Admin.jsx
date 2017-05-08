@@ -17,7 +17,7 @@ export default class Admin extends React.Component {
     }
 
     state = {
-        selectedIndex: 0,
+        selectedIndex: 1,
     };
 
     select = (index) => this.setState({ selectedIndex: index });

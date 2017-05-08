@@ -18,6 +18,7 @@ Meteor.methods({
 
         Forms.insert({
             formName: obj.formName,
+            judges: obj.judges,
             createdAt: new Date(),
         });
     },
@@ -28,10 +29,11 @@ Meteor.methods({
     },
 
     'forms.setName'(formId, newName) {
-        // check(judgeId, String);
-        // check(newName, String);
-
         Forms.update(formId, { $set: { formName: newName } });
+    },
+
+    'forms.setJudges'(formId, newJudgesArray) {
+        Forms.update(formId, { $set: { judges: newJudgesArray } });
     },
 
 });

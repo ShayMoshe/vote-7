@@ -11,9 +11,9 @@ import Task from './Task.jsx';
 import Layout from './Layout.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import Admin from './admin/Admin.jsx';
+import User from './user/User.jsx';
 
-const p1 = () => <div><h1>p1</h1></div>;
-const p2 = () => <div><h1>p2</h1></div>;
+const About = () => <div><h1>About</h1></div>;
 
 // App component - represents the whole app
 class App extends Component {
@@ -40,8 +40,8 @@ class App extends Component {
             <Router>
                 <div style={{ padding: 0 }}>
                     <Layout></Layout>
-                    <Route path="/1" component={p1}></Route>
-                    <Route path="/2" component={p2}></Route>
+                    <Route exact path="/" component={User}></Route>
+                    <Route path="/About" component={About}></Route>
                     <Route path="/Admin" component={Admin}></Route>
                 </div>
             </Router>

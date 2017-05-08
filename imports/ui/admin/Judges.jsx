@@ -112,7 +112,6 @@ class JudgesManager extends React.Component {
             <div>
                 <br />
                 <Card style={{ width: "90%", marginLeft: "5%" }}>
-
                     <CardActions style={{ display: "inline-block" }} >
                         <TextField
                             floatingLabelText="Name"
@@ -138,7 +137,6 @@ class JudgesManager extends React.Component {
                         </List>
                     </CardText>
                 </Card>
-
             </div>
         );
     }

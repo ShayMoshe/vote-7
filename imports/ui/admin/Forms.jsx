@@ -1,4 +1,5 @@
 import { Forms } from '../../api/forms.js';
+import { Judges } from '../../api/judges.js';
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
@@ -14,6 +15,7 @@ import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'm
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
+import Form from './Form.jsx';
 
 class FormsManager extends React.Component {
 
@@ -24,15 +26,12 @@ class FormsManager extends React.Component {
         this.styleBtn = { margin: 12, };
     }
 
-    deleteForm() {
-        Meteor.call('forms.remove', this._id);
-    }
-
     addForm(event) {
         const name = this.refs.nameInput.input.value.trim();
 
         let formObj = {
             formName: name,
+            judges: [],
         };
         Meteor.call('forms.insert', formObj);
 
@@ -40,17 +39,11 @@ class FormsManager extends React.Component {
         this.refs.nameInput.input.value = '';        
     }
 
-    handleChangeName = (event) => {
-        Meteor.call('forms.setName', event.target.name,event.target.value);
-    };
-
     renderListItem(form) {
         return (
-            <h1>{form.formName}</h1>
+            <Form data={form} judges={this.props.judges}/>
         );
-
     }
-
 
     renderForms() {
 
@@ -59,9 +52,7 @@ class FormsManager extends React.Component {
         return forms.map((form) => {
             return (
                 <div key={form._id.toString()}>
-                    <ListItem
-                        primaryText={this.renderListItem(form)}
-                    />
+                        {this.renderListItem(form)}
                 </div>
             )
         });
@@ -85,15 +76,8 @@ class FormsManager extends React.Component {
                             primary={true} style={this.styleBtn}
                             style={{ float: "left", marginTop: 27 }} />
                     </CardActions>
-
-                    <Divider />
-                    <CardText style={{padding:0}}>
-                        <List>
-                            {this.renderForms()}
-                        </List>
-                    </CardText>
                 </Card>
-
+                {this.renderForms()}
             </div>
         );
     }
@@ -105,9 +89,11 @@ FormsManager.propTypes = {
 
 export default createContainer(() => {
     Meteor.subscribe('forms');
+    Meteor.subscribe('judges');
 
     return {
         forms: Forms.find({}, { sort: { createdAt: -1 } }).fetch(),
+        judges: Judges.find({}, { sort: { createdAt: -1 } }).fetch(),
     };
 }, FormsManager);
 
