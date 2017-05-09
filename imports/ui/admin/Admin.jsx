@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router-dom';
 import Judeges from './Judges.jsx';
 import Forms from './Forms.jsx';
-
+import { Meteor } from 'meteor/meteor';
 import FontIcon from 'material-ui/FontIcon';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
+import AccountsUIWrapper from './../AccountsUIWrapper.jsx';
+import { Users } from '../../api/users.js';
 
 const judegesIcon = <FontIcon className="material-icons">J</FontIcon>;
 const formsIcon = <FontIcon className="material-icons">F</FontIcon>;
 
-export default class Admin extends React.Component {
+class Admin extends React.Component {
 
     constructor(props) {
         super(props);
+        Meteor.subscribe('userList');
+
     }
 
     state = {
@@ -23,6 +28,7 @@ export default class Admin extends React.Component {
     select = (index) => this.setState({ selectedIndex: index });
 
     renderContext() {
+        
         if (this.state.selectedIndex === 0) {
             return (
                 <Judeges />
@@ -35,7 +41,6 @@ export default class Admin extends React.Component {
 
     }
     render() {
-
         return (
             <div>
                 <Paper zDepth={1}>
@@ -52,8 +57,22 @@ export default class Admin extends React.Component {
                         />
                     </BottomNavigation>
                 </Paper>
+                <AccountsUIWrapper />
+
                 {this.renderContext()}
             </div>
         )
+
     }
 }
+
+Admin.propTypes = {
+    users: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+    Meteor.subscribe('userList');
+    return {
+        
+    };
+}, Admin);
