@@ -28,7 +28,6 @@ class Admin extends React.Component {
     select = (index) => this.setState({ selectedIndex: index });
 
     renderContext() {
-        
         if (this.state.selectedIndex === 0) {
             return (
                 <Judeges />
@@ -38,28 +37,35 @@ class Admin extends React.Component {
                 <Forms />
             )
         }
-
     }
+
+    renderNavigation() {
+        return (
+            <Paper zDepth={1}>
+                <BottomNavigation selectedIndex={this.state.selectedIndex}>
+                    <BottomNavigationItem
+                        label="Judges"
+                        icon={judegesIcon}
+                        onTouchTap={() => this.select(0)}
+                    />
+                    <BottomNavigationItem
+                        label="Forms"
+                        icon={formsIcon}
+                        onTouchTap={() => this.select(1)}
+                    />
+                </BottomNavigation>
+            </Paper>
+        )
+    }
+
     render() {
+        console.log(Meteor.user());
         return (
             <div>
-                <Paper zDepth={1}>
-                    <BottomNavigation selectedIndex={this.state.selectedIndex}>
-                        <BottomNavigationItem
-                            label="Judges"
-                            icon={judegesIcon}
-                            onTouchTap={() => this.select(0)}
-                        />
-                        <BottomNavigationItem
-                            label="Forms"
-                            icon={formsIcon}
-                            onTouchTap={() => this.select(1)}
-                        />
-                    </BottomNavigation>
-                </Paper>
+                {Meteor.user() ? this.renderNavigation() : null}
                 <AccountsUIWrapper />
+                {Meteor.user() ? this.renderContext() : null}
 
-                {this.renderContext()}
             </div>
         )
 
@@ -67,12 +73,12 @@ class Admin extends React.Component {
 }
 
 Admin.propTypes = {
-    users: PropTypes.array.isRequired,
+    // users: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
     Meteor.subscribe('userList');
     return {
-        
+        // users: Meteor.user()
     };
 }, Admin);
