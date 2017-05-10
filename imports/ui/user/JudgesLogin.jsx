@@ -10,7 +10,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 
 const style = {
-    height: 220,
+    height: 240,
     width: 320,
     marginTop: 30,
     marginLeft: '50%',
@@ -21,7 +21,7 @@ const style = {
 };
 
 const styleBtn = {
-  margin: 12,
+    margin: 12,
 };
 
 class JudgeLogin extends React.Component {
@@ -31,16 +31,37 @@ class JudgeLogin extends React.Component {
         Meteor.subscribe('judges');
 
         this.styleBtn = { margin: 12, };
+
+    }
+
+    state = {
+        errorTextField: ''
+    };
+
+    judgeLogin() {
+        const id = this.refs.idInputJudge.input.value.trim();
+        this.setState({ errorTextField: '' });
+        let judgeInfo = Judges.findOne({ judgeId: id });
+        if (judgeInfo) {
+            console.log(judgeInfo);
+        } else {
+            console.warn('login failed!');
+            this.setState({ errorTextField: 'login failed' });
+        }
     }
 
     renderLogin() {
         return (
             <div>
-                <h2 style={{color:'#00abe6', marginTop:25}}>Login</h2>
+                <h2 style={{ color: '#00abe6', marginTop: 25 }}>Login</h2>
                 <TextField
                     floatingLabelText="ID"
+                    ref="idInputJudge"
+                    errorText={this.state.errorTextField}
                 />
-                <RaisedButton label="Enter" primary={true} style={styleBtn} />
+                <RaisedButton label="Enter" primary={true}
+                    style={styleBtn}
+                    onClick={this.judgeLogin.bind(this)} />
             </div>
         )
     }
@@ -53,14 +74,14 @@ class JudgeLogin extends React.Component {
 }
 
 JudgeLogin.propTypes = {
-    judges: PropTypes.array.isRequired,
+    //judges: PropTypes.array.isRequired,
 };
 
 export default createContainer(() => {
     Meteor.subscribe('judges');
 
     return {
-        judges: Judges.find({}, { sort: { createdAt: -1 } }).fetch(),
+        //judges: Judges.find({}, { sort: { createdAt: -1 } }).fetch(),
     };
 }, JudgeLogin);
 
